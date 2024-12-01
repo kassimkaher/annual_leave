@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "900763199493",
+    "project_id": "leavs-722c4",
+    "storage_bucket": "leavs-722c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900763199493:android:52b5cfdf2e11b2cca5546c",
+        "android_client_info": {
+          "package_name": "com.starsphere.annualLeave"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900763199493-fgnsnsgolonqv7f9rt4uel3ald7rijti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.starsphere.annualLeave",
+            "certificate_hash": "8c1956e334b3ea5620a67126eec07be61ada5e3d"
+          }
+        },
+        {
+          "client_id": "900763199493-fjcdlr0ah9ui5bjstrapis8tqqqj01tk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhFWQnie63gfOmhaxMjV4o4Nq1SVCnW3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900763199493-fjcdlr0ah9ui5bjstrapis8tqqqj01tk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "900763199493-1hv9avjckbv2uf4ifg6mal1m2vgjrqcc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.annualLeave"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
