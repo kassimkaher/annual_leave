@@ -15,7 +15,8 @@ class BaseTheme extends ThemeExtension<BaseTheme> {
   final Color neutralColor;
   ThemeData get themeData {
     return ThemeData(
-        // primaryColor: const Color.fromARGB(255, 108, 125, 0),
+        // brightness: Brightness.dark,
+        //  primaryColor: const Color.fromARGB(255, 108, 125, 0),
         // colorScheme: ColorScheme(
         //     brightness: Brightness.light,
         //     primary: const Color.fromARGB(255, 108, 125, 0),
@@ -28,6 +29,7 @@ class BaseTheme extends ThemeExtension<BaseTheme> {
         //     onError: Colors.pinkAccent,
         //     surface: const Color(0XFFF1F1F1),
         //     onSurface: const Color.fromARGB(255, 42, 48, 0)),
+        colorSchemeSeed: Colors.deepPurple,
         cardTheme: CardTheme(
           elevation: 0.08,
           margin: const EdgeInsets.symmetric(vertical: 4),
@@ -73,10 +75,6 @@ class BaseTheme extends ThemeExtension<BaseTheme> {
                 cornerSmoothing: 1,
               ),
             )),
-        colorScheme: ColorScheme.fromSeed(
-            //  brightness: Brightness.dark,
-
-            seedColor: const Color.fromARGB(255, 209, 241, 1)),
         useMaterial3: true);
   }
 

@@ -1,18 +1,17 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:annual_leave/core/enums/enums.dart';
-import 'package:annual_leave/core/services/local_db.dart';
-import 'package:annual_leave/core/translation/translate.dart';
+import 'package:annual_leave/core/utils/constant/keys.dart';
+import 'package:annual_leave/src/apps/tmwn_dash/onboarding/presentation/logic/app%20config/app_config_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 extension KQ on String? {
   String tr() {
-    return this == null
-        ? ""
-        : LocalDatabase.getLocalization() == LanguageEnum.arabic
-            ? Translation.arabicTranslate[this] ?? this
-            : Translation.kurdishString[this] ?? this;
+    return navigatorKey.currentContext!
+        .read<AppConfigCubit>()
+        .getCurrentTranslation()
+        .getContent((this ?? "").toUpperCase());
   }
 
   String get arabicNumber {
@@ -138,3 +137,28 @@ String getEnglishNumber(String value) {
   value = value.replaceAll('٩', '9');
   return value;
 }
+
+extension ListOperation on Map<dynamic, dynamic>? {
+  String getContent(String key) {
+    return this == null || !this!.containsKey(key)
+        ? genaralTranslation[key] ?? key
+        : this![key];
+  }
+}
+
+final genaralTranslation = {
+  "INTERNET_ERROR_MSG": "حدث خطأ! يرجى التحقق من الاتصال بشبكة الانترنت",
+  "RETRY": "أعد المحاولة",
+  "WAIT_PREPARE_APP": "جاري تحضير التطبيق",
+  "ERROR_PREPARE_APP": "حدث خطأ أثناء تحضير التطبيق",
+  "APP_FRAUD_MESSAGE": "لا يمكن تشغيل هذا التطبيق على جهازك.",
+  "GEO_LOCATION_SERVICE": "خدمة الموقع الجغرافي",
+  "ALLOW_LOCATION_ACCESS": "السماح بالوصول للموقع ",
+  "ALLOW_LOCATION_ACCESS_HINT":
+      "يجب السماح للوصول الى خدمة الموقع لضمان عمل التطبيق",
+  "OPEN_SETTINGS": "فتح الاعدادات",
+  "ENABLE": "تفعيل",
+  "ENABLE_LOCATION_SERVICE": "يجب تشغيل خدمة الموقع الجغرافي",
+  "NETWORK_NOT_SECURE":
+      "يبدو أن هناك مشكلة في اتصالك. يُرجى التحقق من إعدادات الشبكة أو أي إعدادات إضافية على الجهاز لضمان تجربة استخدام سلسة وآمنة"
+};

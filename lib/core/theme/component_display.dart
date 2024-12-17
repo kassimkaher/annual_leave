@@ -1,5 +1,5 @@
 import 'package:annual_leave/core/utils/constant/spaces.dart';
-import 'package:annual_leave/src/apps/auth/domain/usecases/logout_usecase.dart';
+import 'package:annual_leave/src/apps/tmwn_dash/auth/domain/usecases/logout_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 

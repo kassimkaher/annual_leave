@@ -1,6 +1,25 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
+
+class L {
+  static success({String? name, String? msg}) {
+    kdp(name: name ?? "success", msg: msg, c: "gr");
+  }
+
+  static error({String? name, String? msg}) {
+    kdp(name: name ?? "error", msg: msg, c: "r");
+  }
+
+  static warning({String? name, dynamic msg}) {
+    kdp(name: name ?? "warning", msg: msg, c: "y");
+  }
+
+  static info({String? name, dynamic msg}) {
+    kdp(name: name ?? "info", msg: msg, c: "cy");
+  }
+}
 
 kdp({required name, required msg, required c}) {
   final col = {
@@ -11,16 +30,8 @@ kdp({required name, required msg, required c}) {
     "b": "\x1B[34m",
     "m": "\x1B[35m"
   };
-  final e = {
-    "r": "🥵",
-    "gr": "📗",
-    "y": "😨",
-    "cy": "🧑🏻‍🎤",
-    "b": "👨🏻‍🏭",
-    "m": "👩🏻‍🎤"
-  };
 
-  log("\x1B[37m ${e[c]} $name: ${col[c]}  $msg");
+  log("\x1B[37m  $name: ${col[c]}  $msg");
 }
 
 extension SplitMatch<T> on List<T> {

@@ -1,45 +1,35 @@
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:annual_leave/core/extensions/extention.dart';
 import 'package:annual_leave/core/network/data_state.dart';
+import 'package:annual_leave/core/network/dio_log_interceptor.dart';
 import 'package:annual_leave/core/network/error_model.dart';
 import 'package:annual_leave/core/network/network_handle_error.dart';
 import 'package:annual_leave/core/services/local_db.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class DioClient {
-  Dio instance(String? url) {
+  Dio instance(String? url, {bool isAuthRequired = true}) {
     // final token = LocalDatabase.getToken();
+    var dio = Dio(url != null ? BaseOptions(baseUrl: url) : BaseOptions());
 
-    return Dio()
-      ..options.headers['Accept'] = 'application/json'
-      ..options.headers['Content-Type'] = 'application/json'
-      ..options.headers['Authorization'] = "Bearer ${LocalDatabase.getToken()}"
-      ..options.headers['app-platform-type'] = Platform.isAndroid
-          ? "ANDROID"
-          : Platform.isIOS
-              ? "IOS"
-              : "OTHER"
-      ..interceptors.add(
-        LogInterceptor(
-          logPrint: (obj) {
-            if (kDebugMode) {
-              log('req :  $obj');
-            }
-          },
-        ),
-      );
+    dio.options.headers['X-App-Language'] =
+        LocalDatabase.getLocalization().name;
+    dio.options.headers['Accept'] = 'application/json';
+    dio.options.headers['Content-Type'] = 'application/json';
+    if (isAuthRequired) {
+      dio.options.headers['Authorization'] =
+          '${LocalDatabase.getCridentialFromLocal()?.token}';
+    }
+    // dio.options.headers['app-platform-type'] = Platform.isAndroid
+    //     ? "ANDROID"
+    //     : Platform.isIOS
+    //         ? "IOS"
+    //         : "OTHER";
+
+    dio.interceptors.add(DioLogger());
+
+    return dio;
   }
-
-  // options() => BaseOptions(
-  //     receiveDataWhenStatusError: true,
-  //     connectTimeout: 60 * 1000, // 60 seconds
-  //     receiveTimeout: 60 * 1000 // 60 seconds
-  //     );
 }
 
 extension ApiCallHandler<T> on Future<Response<dynamic>> {
@@ -47,14 +37,10 @@ extension ApiCallHandler<T> on Future<Response<dynamic>> {
     try {
       final data = await this;
 
-      kdp(name: "data", msg: data, c: "gr");
-
       return DataSuccess(dataType(data.data["data"]));
     } on DioError catch (dioError) {
       return NetworkHandler.getDataFailed(dioError);
     } catch (error) {
-      kdp(name: "Exaption: ", msg: error, c: "r");
-
       return DataFailed(InternetConnectionError());
     }
   }
@@ -63,7 +49,6 @@ extension ApiCallHandler<T> on Future<Response<dynamic>> {
       T Function(List<dynamic> json) dataType) async {
     try {
       final data = await this;
-      kdp(name: "datafadf", msg: data.data, c: "gr");
 
       return DataSuccess(dataType(data.data["data"]));
     } on DioError catch (dioError) {

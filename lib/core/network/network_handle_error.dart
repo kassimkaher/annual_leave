@@ -2,7 +2,6 @@ import 'package:annual_leave/core/extensions/string_extention.dart';
 import 'package:annual_leave/core/modals/alert_dialog.dart';
 import 'package:annual_leave/core/network/data_state.dart';
 import 'package:annual_leave/core/network/error_model.dart';
-import 'package:annual_leave/src/apps/auth/domain/usecases/logout_usecase.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -31,7 +30,7 @@ datatype: $T
 ''',
         c: 'r');
     if (dioError.response?.statusCode == 401) {
-      logoutUseCase();
+      //logoutUseCase();
     }
 
     switch (dioError.response!.statusCode) {

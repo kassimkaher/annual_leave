@@ -4,20 +4,17 @@ import 'package:annual_leave/core/utils/constant/keys.dart';
 import 'package:annual_leave/core/utils/injector.dart';
 import 'package:annual_leave/core/utils/theme.dart';
 import 'package:annual_leave/firebase_options.dart';
-import 'package:annual_leave/src/apps/annual_leave/google_login.dart';
 import 'package:annual_leave/src/apps/annual_leave/logic/annual/annual_leav_cubit.dart';
-import 'package:annual_leave/src/apps/annual_leave/manager_leaves_page.dart';
 import 'package:annual_leave/src/apps/annual_leave/user_leaves_page.dart';
-import 'package:annual_leave/src/apps/auth/presentation/pages/auth_page.dart';
 import 'package:annual_leave/src/apps/financial_accounts/data/financial_model.dart';
 import 'package:annual_leave/src/apps/financial_accounts/data/transaction%20model/transaction_model.dart';
 import 'package:annual_leave/src/apps/financial_accounts/presentation/financial_accounts/financial_accounts_logic/financial_accounts_cubit.dart';
-import 'package:annual_leave/src/apps/financial_accounts/presentation/pages/financal_page.dart';
-import 'package:annual_leave/src/apps/health_app/food/presentation/pages/food_calories_page.dart';
-import 'package:annual_leave/src/apps/super_app_page.dart';
+import 'package:annual_leave/src/apps/tmwn_dash/onboarding/prepare_app_page.dart';
+import 'package:annual_leave/src/apps/tmwn_dash/onboarding/presentation/logic/app%20config/app_config_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
@@ -61,25 +58,24 @@ class MyApp extends StatelessWidget {
                 FinancialAccountsCubit()..getTransactionEvent()),
         BlocProvider<AnnualLeavCubit>(
             create: (BuildContext context) => AnnualLeavCubit()..init()),
+        BlocProvider<AppConfigCubit>(
+            create: (BuildContext context) => AppConfigCubit()..init()),
       ],
       child: MaterialApp(
         title: 'Anual Leave',
         theme: const BaseTheme().themeData,
         navigatorKey: navigatorKey,
-        initialRoute: LocalDatabase.getProfileStorage() != null
-            ? "super_app"
-            : "auth_page",
-        routes: {
-          "super_app": (context) => const SuperAppPage(),
-          "user_leaves": (context) => const UserLeavesPageContent(),
-          "google_signin": (context) => const GoogleLoginPage(),
-          "manager_leaves": (context) => const ManagerLeavesPageContent(),
-          "auth_page": (context) => const AuthPage(
-                isLogin: true,
-              ),
-          "food_app": (context) => const FoodCaloriesPage(),
-          "financial_app": (context) => const FinancialAccountsPage(),
-        },
+        home: const PrepareAppPage(),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('ar'), // English
+          Locale('en'), // Spanish
+        ],
+        locale: const Locale("ar"),
         // home: LocalDatabase.getUser() == null
         //     ? const GoogleLoginPage()
         //     : const UserLeavesPageContent(),
@@ -108,6 +104,7 @@ class FinanicailApp extends StatelessWidget {
         title: 'Financial Accounts',
         theme: getTheme(context, "Somar"),
         navigatorKey: navigatorKey,
+        locale: const Locale("ar"),
         // initialRoute: "google_signin",
         // routes: {
         //   "user_leaves": (context) => const UserLeavesPageContent(),

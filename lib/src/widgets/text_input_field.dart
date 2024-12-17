@@ -12,8 +12,8 @@ class TextInputField extends CustomInputField {
       super.type,
       super.label})
       : super(
-          topPadding: 4,
-          bottomPadding: 4,
+          topPadding: 8,
+          bottomPadding: 8,
           leftPadding: kDefaultPadding,
           rightPadding: kDefaultPadding,
           textInputType: TextInputType.text,
@@ -29,8 +29,8 @@ class PasswordInputField extends CustomInputField {
       super.validatThis,
       super.label})
       : super(
-          topPadding: 4,
-          bottomPadding: 4,
+          topPadding: 8,
+          bottomPadding: 8,
           leftPadding: kDefaultPadding,
           rightPadding: kDefaultPadding,
           textInputType: TextInputType.visiblePassword,
@@ -46,11 +46,11 @@ class NumberInput extends CustomInputField {
       super.validatThis,
       super.label})
       : super(
-          topPadding: 4,
-          bottomPadding: 4,
+          topPadding: 8,
+          bottomPadding: 8,
           leftPadding: kDefaultPadding,
           rightPadding: kDefaultPadding,
-          textInputType: TextInputType.number,
+          textInputType: TextInputType.phone,
           errorStyle: const TextStyle(color: Colors.red, fontSize: 12),
         );
 }
@@ -59,8 +59,8 @@ class TextAreaInputField extends CustomInputField {
   const TextAreaInputField(
       {super.key, super.controller, super.validatThis, super.label})
       : super(
-            topPadding: 4,
-            bottomPadding: 4,
+            topPadding: 8,
+            bottomPadding: 8,
             leftPadding: 12,
             rightPadding: 12,
             textInputType: TextInputType.text,
@@ -76,8 +76,8 @@ class DateInputField extends CustomInputField {
       super.label,
       super.enable})
       : super(
-          topPadding: 4,
-          bottomPadding: 4,
+          topPadding: 8,
+          bottomPadding: 8,
           leftPadding: kDefaultPadding,
           rightPadding: kDefaultPadding,
           textInputType: TextInputType.text,

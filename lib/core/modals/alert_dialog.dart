@@ -144,7 +144,7 @@ void showErrorDialog(ErrorResponseModel? error) {
     builder: (context) {
       return AlertDialog(
         title: const Text("Faile Action"),
-        content: Text((error?.message ?? "An error occurred".tr())),
+        content: Text((error?.message.tr() ?? "An error occurred".tr())),
         actions: [
           TextButton(
             onPressed: () {

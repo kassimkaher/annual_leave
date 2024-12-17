@@ -1,8 +1,8 @@
 import 'package:annual_leave/core/enums/enums.dart';
 import 'package:annual_leave/core/utils/constant/keys.dart';
 import 'package:annual_leave/src/apps/annual_leave/entityes/user_entity.dart';
-import 'package:annual_leave/src/apps/auth/data/model/user_model.dart';
 import 'package:annual_leave/src/apps/financial_accounts/data/transaction%20model/transaction_model.dart';
+import 'package:annual_leave/src/apps/tmwn_dash/auth/data/model/user_model.dart';
 import 'package:hive/hive.dart';
 
 class LocalDatabase {
@@ -17,7 +17,8 @@ class LocalDatabase {
 
   static LanguageEnum getLocalization() {
     final data = Hive.box(storageKey).get("localization_storage_key");
-    final lang = LanguageEnum.values.byName((data as String?) ?? "arabic");
+    final lang =
+        LanguageEnum.values.byName((data as String?) ?? LanguageEnum.AR.name);
 
     return lang;
   }
@@ -80,27 +81,37 @@ class LocalDatabase {
     return data;
   }
 
-  static void saveToken(String s) {
-    Hive.box(storageKey).put("AccessToken", s);
+  static void saveCridential(LoginCridential s) {
+    Hive.box(storageKey).put("LoginCridential_key", s.toJson());
   }
 
-  static String? getToken() {
-    return Hive.box(storageKey).get("AccessToken");
-  }
-
-  static void saveProfile(UserModel userModel) {
-    Hive.box(storageKey).put("Profile_storage_key", userModel.toJson());
-  }
-
-  static UserModel? getProfileStorage() {
-    final data = ((Hive.box(storageKey).get("Profile_storage_key")
+  static LoginCridential? getCridentialFromLocal() {
+    final data = ((Hive.box(storageKey).get("LoginCridential_key")
         as Map<dynamic, dynamic>?));
     if (data == null) {
       return null;
     }
-    final userModel = UserModel.fromJson(data.map((key, value) {
+    final userModel = LoginCridential.fromJson(data.map((key, value) {
       return MapEntry(key.toString(), value);
     }));
     return userModel;
+  }
+
+  static Map<dynamic, dynamic>? getDataStoreLocal() {
+    final langString = getLocalization();
+    final data =
+        (Hive.box(storageKey).get("data_store_key_${langString.name}"));
+    if (data == null) {
+      return null;
+    }
+    return data;
+  }
+
+  static saveDataStoreToLocal(
+      LanguageEnum lag, Map<dynamic, dynamic>? districts) {
+    if (districts == null) {
+      return;
+    }
+    Hive.box(storageKey).put("data_store_key_${lag.name}", districts);
   }
 }
